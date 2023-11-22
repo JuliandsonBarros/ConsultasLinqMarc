@@ -1,0 +1,14 @@
+C:\Users\juliandson.soares\Documents\workspace\LinqMarcoratti\LinqMarcoratti\bin\Debug\net7.0\LinqMarcoratti.exe
+C:\Users\juliandson.soares\Documents\workspace\LinqMarcoratti\LinqMarcoratti\bin\Debug\net7.0\LinqMarcoratti.deps.json
+C:\Users\juliandson.soares\Documents\workspace\LinqMarcoratti\LinqMarcoratti\bin\Debug\net7.0\LinqMarcoratti.runtimeconfig.json
+C:\Users\juliandson.soares\Documents\workspace\LinqMarcoratti\LinqMarcoratti\bin\Debug\net7.0\LinqMarcoratti.dll
+C:\Users\juliandson.soares\Documents\workspace\LinqMarcoratti\LinqMarcoratti\bin\Debug\net7.0\LinqMarcoratti.pdb
+C:\Users\juliandson.soares\Documents\workspace\LinqMarcoratti\LinqMarcoratti\obj\Debug\net7.0\LinqMarcoratti.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\juliandson.soares\Documents\workspace\LinqMarcoratti\LinqMarcoratti\obj\Debug\net7.0\LinqMarcoratti.AssemblyInfoInputs.cache
+C:\Users\juliandson.soares\Documents\workspace\LinqMarcoratti\LinqMarcoratti\obj\Debug\net7.0\LinqMarcoratti.AssemblyInfo.cs
+C:\Users\juliandson.soares\Documents\workspace\LinqMarcoratti\LinqMarcoratti\obj\Debug\net7.0\LinqMarcoratti.csproj.CoreCompileInputs.cache
+C:\Users\juliandson.soares\Documents\workspace\LinqMarcoratti\LinqMarcoratti\obj\Debug\net7.0\LinqMarcoratti.dll
+C:\Users\juliandson.soares\Documents\workspace\LinqMarcoratti\LinqMarcoratti\obj\Debug\net7.0\refint\LinqMarcoratti.dll
+C:\Users\juliandson.soares\Documents\workspace\LinqMarcoratti\LinqMarcoratti\obj\Debug\net7.0\LinqMarcoratti.pdb
+C:\Users\juliandson.soares\Documents\workspace\LinqMarcoratti\LinqMarcoratti\obj\Debug\net7.0\LinqMarcoratti.genruntimeconfig.cache
+C:\Users\juliandson.soares\Documents\workspace\LinqMarcoratti\LinqMarcoratti\obj\Debug\net7.0\ref\LinqMarcoratti.dll
