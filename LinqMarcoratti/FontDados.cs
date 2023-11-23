@@ -30,8 +30,8 @@ namespace LinqMarcoratti
             List<Funcionario> Funcionarios = new()
             {
                 new Funcionario {Nome = "Juliandson Barros Soares",Idade = 37, Salario = 10000.00 },
-                new Funcionario {Nome = "Eduarda Leão Galvão Barros",Idade =  18,Salario = 8000.00 },
-                new Funcionario {Nome = "Bruna Leão Galvão Barros",Idade =  18,Salario = 8000.00 },
+                new Funcionario {Nome = "Eduarda Leão Galvão Barros",Idade =  18,Salario = 800.00 },
+                new Funcionario {Nome = "Bruna Leão Galvão Barros",Idade =  29,Salario = 10000.00 },
                 new Funcionario {Nome = "Isabelle da Paz Barros",Idade =  19,Salario = 8000.00 }
             };
             return Funcionarios;
