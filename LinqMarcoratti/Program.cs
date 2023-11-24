@@ -1,5 +1,7 @@
 ﻿using LinqMarcoratti;
+using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
+using System.Numerics;
 
 Console.WriteLine("Consultas LINQ");
 
@@ -110,7 +112,12 @@ Console.WriteLine("=========Consulta agregate que recebe 2  numeros e devolve o 
 int[] numeros = { 3, 5, 7, 9, 10 };
 
 var result10 = numeros.Aggregate((n1,n2) => n1 * n2);//A função agregate itera sob todos os campos da coleção
-Console.WriteLine(result10);
+var result10Con =  (from n in numeros
+                    select n).Aggregate((n1,n2) => n1 * n2);
+
+Console.WriteLine("Consulta utilizando Agregate: " + result10);
+Console.WriteLine("Metodo c/ agregate: " + result10Con);
+
 
 Console.WriteLine();
 Console.WriteLine("=========Consulta agregate c/ valor de semente inicial=========");
@@ -137,12 +144,14 @@ var result12 = FontDados.GetAluno().Aggregate<Aluno, string,string>(
 Console.WriteLine(result12);
 
 Console.WriteLine();
+Console.WriteLine();
 Console.WriteLine("==================Consulta average retornando medias de idade======================");
 
 var result13 = FontDados.GetFuncionarios().Average(f => f.Idade);
 
 Console.WriteLine("A média de idade dos funcionários: " + result13);
 
+Console.WriteLine();
 Console.WriteLine();
 Console.WriteLine("====================Uso do Count====================");
 
@@ -178,12 +187,116 @@ Console.WriteLine("========================================");
 var result20 = FontDados.GetFuncionarios();
 
 var menor = result20.Min(s => s.Salario);
-var menorIdade = result20.Min(i => i.Idade);
-Console.WriteLine(menor);
-Console.WriteLine(menorIdade);
 
-var menor20 = result20.Where(i => i.Idade < 20).Min(s => s.Salario);    
-Console.WriteLine(menor20);
+var menorCon = (from s in result20
+                select s).Min(s => s.Salario);
+
+var menorIdade = result20.Min(i => i.Idade);
+
+var menorIdadeCon = (from s in result20
+                     select s).Min(i => i.Idade);
+
+Console.WriteLine("Metodo Salario: " + menor);
+Console.WriteLine("Consulta Salario: " + menorIdadeCon);
+Console.WriteLine("Metodo Idade: " + menorIdade);
+Console.WriteLine("Consulta Idade: " + menorIdadeCon);
+
+var menor20 = result20.Where(i => i.Idade < 20).Min(s => s.Salario);   
+
+var menor20Con = (from m in result20
+                  where m.Idade < 20
+                  select m).Min(s => s.Salario);
+
+Console.WriteLine("Consulta: " + menor20Con);
+Console.WriteLine("Metodo: " + menor20);
+
+Console.WriteLine();
+Console.WriteLine("===============Quantificador All=========================");
+
+int[] numerosPares = {2, 6, 10, 22, 38, 48, 56 };
+
+var result21 = numerosPares.All(n => n % 2 == 0);
+Console.WriteLine(result21 ? "Elemntos Pares" : "Resultado invalido");
+
+var result22 = (from n in numerosPares
+                select n).All(n => n % 2 == 0);
+Console.WriteLine(result21 ? "Elemntos Pares" : "Resultado invalido");
+
+Console.WriteLine();
+Console.WriteLine("====================Todos os Salarios acima de====================");
+
+var salario2500 = FontDados.GetFuncionarios().Where(n => n.Salario > 2500).Select(n => n.Nome).ToList();
+
+var ConsultaSalario = FontDados.GetFuncionarios();
+
+var funcionariosA = ConsultaSalario.All(n => n.Nome.Contains('J'));
+Console.WriteLine("Todos funcionarios letra J: " + funcionariosA);
+
+
+
+var salario2500Con = (from n in ConsultaSalario
+                      where n.Salario > 2500
+                      select n.Nome).ToList();
+
+for (int i = 0; i < salario2500Con.Count(); i++) {
+    Console.WriteLine("Salario de Peooas por Consulta: " + salario2500Con[i]);
+};
+
+Console.WriteLine();
+Console.WriteLine();
+
+foreach (var n in salario2500) {
+    Console.WriteLine("Salario de Pessoas por Consulta Metodo: " + n);
+}
+
+Console.WriteLine();
+Console.WriteLine("==================Consultas All e Any======================");
+
+var ConsultaNome = FontDados.GetFuncionarios(); 
+
+var a =  ConsultaNome.Any(n => n.Nome.Contains('J'));
+Console.WriteLine("Todos funcionarios letra J: " + a);
+
+var b = (from n in ConsultaNome
+         where n.Nome.Contains("J")
+         select n.Nome).ToList();
+
+foreach (var n in b)
+{
+    Console.WriteLine("Contains nome com J: " + n);
+}
+
+Console.WriteLine();
+Console.WriteLine("====================Uso do Any c/ condição ternária===================");
+
+bool vacinados = FontDados.GetCachorros().Any(i => i.Idade < 5 && i.vacinado == true);
+
+Console.WriteLine(vacinados? "Vacina em dia" : "Vacina atrasada");
+
+Console.WriteLine();
+Console.WriteLine("==================Consultas Com agrupamento======================");
+
+var grupos = FontDados.GetAluno().GroupBy(i => i.Idade).OrderBy(k => k.Key);
+
+foreach (var grupo in grupos) 
+{
+    Console.WriteLine("\n Grupos de Idade: " + $"{grupo.Key}");
+
+    foreach (var n in grupo) 
+    {
+        Console.WriteLine("\t Nomes: " + n.Nome + "/ Sexo: " + n.Sexo + "/ Cursos: "+ n.Cursos.First());
+    }
+}
+
+var grupoMetodo = FontDados.GetAluno()
+    .GroupBy(n => n.Idade)
+    .OrderBy(k => k.Key)
+    .Select(c => new
+    {
+        key = c.Key,
+        Aluno = c.OrderBy(x => x.Cursos)
+    });
+
 
 Console.ReadKey();
 
