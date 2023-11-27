@@ -2,17 +2,19 @@
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
 using System.Numerics;
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 Console.WriteLine("Consultas LINQ");
 
 IEnumerable<List<string>> retornoListaAluno = FontDados.GetAluno().Select(c => c.Cursos).ToList();
 
-foreach (var retornoLista in retornoListaAluno) 
+foreach (var retornoLista in retornoListaAluno)
 {
     foreach (var curso in retornoLista)
     {
-        Console.WriteLine(curso);   
-       
+        Console.WriteLine(curso);
+
     }
 }
 
@@ -21,7 +23,7 @@ Console.WriteLine("====Resultado Distinct=====");
 
 var result = FontDados.GetIdades().Distinct().ToList();
 
-foreach (var idade in result) 
+foreach (var idade in result)
 {
     Console.Write(" " + idade);
 }
@@ -31,7 +33,7 @@ Console.WriteLine();
 var result2 = FontDados.GetNomes().Distinct(StringComparer.OrdinalIgnoreCase).ToList();
 
 foreach (var nome in result2)
-{ 
+{
     Console.Write("/" + nome);
 }
 
@@ -40,7 +42,7 @@ Console.WriteLine();
 Console.WriteLine();
 Console.WriteLine("====Resultado DistinctBy=====");
 
-var result3 =  FontDados.GetAluno().ToList();
+var result3 = FontDados.GetAluno().ToList();
 
 var alunosDistintos = result3.DistinctBy(a => a.Idade);
 
@@ -54,7 +56,8 @@ Console.WriteLine("====Resultado EceptBy=====");
 
 var result4 = FontDados.GetAlunosReprovados().Distinct().ToList();
 
-foreach (var reprovado in result4) { 
+foreach (var reprovado in result4)
+{
     Console.WriteLine(reprovado);
 }
 
@@ -73,16 +76,18 @@ Console.WriteLine("=========Ordem Decrescente=========");
 
 var result6 = FontDados.GetAluno().OrderByDescending(a => a.Nome).ToList();
 
-foreach (var nomeAluno in result6) {
+foreach (var nomeAluno in result6)
+{
     Console.WriteLine(nomeAluno.Nome);
 }
 
 Console.WriteLine();
 Console.WriteLine("=========Ordem Crescente com dois criterios=========");
 
-var result7 =  FontDados.GetAluno().OrderBy(a => a.Nome).ThenBy(a => a.Idade).ToList();
+var result7 = FontDados.GetAluno().OrderBy(a => a.Nome).ThenBy(a => a.Idade).ToList();
 
-foreach (var nomeAluno in result7) { 
+foreach (var nomeAluno in result7)
+{
     Console.WriteLine(nomeAluno.Nome + " " + nomeAluno.Idade);
 }
 
@@ -91,8 +96,9 @@ Console.WriteLine("=========Consulta que retorna Alunos C/ idades superiores a 3
 
 var result8 = FontDados.GetAluno().Where(i => i.Idade >= 30).OrderBy(a => a.Nome).ToList();
 
-foreach (var nomeAluno in result8) {
-    Console.WriteLine(nomeAluno.Nome + " " +  nomeAluno.Idade);
+foreach (var nomeAluno in result8)
+{
+    Console.WriteLine(nomeAluno.Nome + " " + nomeAluno.Idade);
 };
 
 
@@ -111,9 +117,9 @@ Console.WriteLine("=========Consulta agregate que recebe 2  numeros e devolve o 
 
 int[] numeros = { 3, 5, 7, 9, 10 };
 
-var result10 = numeros.Aggregate((n1,n2) => n1 * n2);//A função agregate itera sob todos os campos da coleção
-var result10Con =  (from n in numeros
-                    select n).Aggregate((n1,n2) => n1 * n2);
+var result10 = numeros.Aggregate((n1, n2) => n1 * n2);//A função agregate itera sob todos os campos da coleção
+var result10Con = (from n in numeros
+                   select n).Aggregate((n1, n2) => n1 * n2);
 
 Console.WriteLine("Consulta utilizando Agregate: " + result10);
 Console.WriteLine("Metodo c/ agregate: " + result10Con);
@@ -127,7 +133,7 @@ var result11 = FontDados.GetAluno().Aggregate<Aluno, string>(
     (semente, a) => semente += a.Nome + ",");
 //Note que o metodo Agregate itera sobre todos os elementos da coleção 
 //e concatena todos os nomes da coleção logo apos a string "Nomes: "
-int indice = result11.LastIndexOf(","); 
+int indice = result11.LastIndexOf(",");
 result11 = result11.Remove(indice);
 
 Console.WriteLine(result11);
@@ -135,10 +141,10 @@ Console.WriteLine(result11);
 Console.WriteLine();
 Console.WriteLine("========================================");
 
-var result12 = FontDados.GetAluno().Aggregate<Aluno, string,string>(
+var result12 = FontDados.GetAluno().Aggregate<Aluno, string, string>(
     "Nomes: ", //valor semente aqui)
     (semente, a) => semente += a.Nome + ",",
-    r => r.Substring(0,r.Length-1));
+    r => r.Substring(0, r.Length - 1));
 
 
 Console.WriteLine(result12);
@@ -161,7 +167,7 @@ var result14 = cursos.Count();
 Console.WriteLine(result14);
 
 var result15 = (from c in cursos
-               select c).Count();
+                select c).Count();
 Console.WriteLine(result15);
 
 var result16 = cursos.Count(c => c.Contains("J"));
@@ -201,7 +207,7 @@ Console.WriteLine("Consulta Salario: " + menorIdadeCon);
 Console.WriteLine("Metodo Idade: " + menorIdade);
 Console.WriteLine("Consulta Idade: " + menorIdadeCon);
 
-var menor20 = result20.Where(i => i.Idade < 20).Min(s => s.Salario);   
+var menor20 = result20.Where(i => i.Idade < 20).Min(s => s.Salario);
 
 var menor20Con = (from m in result20
                   where m.Idade < 20
@@ -213,7 +219,7 @@ Console.WriteLine("Metodo: " + menor20);
 Console.WriteLine();
 Console.WriteLine("===============Quantificador All=========================");
 
-int[] numerosPares = {2, 6, 10, 22, 38, 48, 56 };
+int[] numerosPares = { 2, 6, 10, 22, 38, 48, 56 };
 
 var result21 = numerosPares.All(n => n % 2 == 0);
 Console.WriteLine(result21 ? "Elemntos Pares" : "Resultado invalido");
@@ -238,23 +244,25 @@ var salario2500Con = (from n in ConsultaSalario
                       where n.Salario > 2500
                       select n.Nome).ToList();
 
-for (int i = 0; i < salario2500Con.Count(); i++) {
+for (int i = 0; i < salario2500Con.Count(); i++)
+{
     Console.WriteLine("Salario de Peooas por Consulta: " + salario2500Con[i]);
 };
 
 Console.WriteLine();
 Console.WriteLine();
 
-foreach (var n in salario2500) {
+foreach (var n in salario2500)
+{
     Console.WriteLine("Salario de Pessoas por Consulta Metodo: " + n);
 }
 
 Console.WriteLine();
 Console.WriteLine("==================Consultas All e Any======================");
 
-var ConsultaNome = FontDados.GetFuncionarios(); 
+var ConsultaNome = FontDados.GetFuncionarios();
 
-var a =  ConsultaNome.Any(n => n.Nome.Contains('J'));
+var a = ConsultaNome.Any(n => n.Nome.Contains('J'));
 Console.WriteLine("Todos funcionarios letra J: " + a);
 
 var b = (from n in ConsultaNome
@@ -271,22 +279,43 @@ Console.WriteLine("====================Uso do Any c/ condição ternária=======
 
 bool vacinados = FontDados.GetCachorros().Any(i => i.Idade < 5 && i.vacinado == true);
 
-Console.WriteLine(vacinados? "Vacina em dia" : "Vacina atrasada");
+Console.WriteLine(vacinados ? "Vacina em dia" : "Vacina atrasada");
 
 Console.WriteLine();
 Console.WriteLine("==================Consultas Com agrupamento======================");
 
 var grupos = FontDados.GetAluno().GroupBy(i => i.Idade).OrderBy(k => k.Key);
 
-foreach (var grupo in grupos) 
+foreach (var grupo in grupos)
+{
+    Console.WriteLine("\n Grupos de Idade: " + $"{grupo.Key}");
+    foreach (var g in grupo)
+    {
+        Console.WriteLine("\t Nomes: " + g.Nome + "/ Sexo: " + g.Sexo);
+        for (int j = 0; j < grupo.Count(); j++)
+        {
+            Console.WriteLine("\t Cursos: " + g.Cursos.First());
+        }
+    }
+}
+
+
+
+
+
+/*foreach (var grupo in grupos)
 {
     Console.WriteLine("\n Grupos de Idade: " + $"{grupo.Key}");
 
-    foreach (var n in grupo) 
+    foreach (var n in grupo)
     {
-        Console.WriteLine("\t Nomes: " + n.Nome + "/ Sexo: " + n.Sexo + "/ Cursos: "+ n.Cursos.First());
+        Console.WriteLine("\t Nomes: " + n.Nome + "/ Sexo: " + n.Sexo);
+        for (int i = 0; i < grupo.Count(); i++)
+        {
+            Console.WriteLine("\t/ Cursos: " + n.Cursos);
+        }
     }
-}
+}*/
 
 var grupoMetodo = FontDados.GetAluno()
     .GroupBy(n => n.Idade)
@@ -296,6 +325,88 @@ var grupoMetodo = FontDados.GetAluno()
         key = c.Key,
         Aluno = c.OrderBy(x => x.Cursos)
     });
+
+Console.WriteLine();
+Console.WriteLine("====================Consultas com agrupamento C/ groupBy====================");
+
+var result23 = FontDados.GetPessoas();
+
+var result24 = (from p in result23
+                group p by p.Idade);
+
+var result25 = FontDados.GetPessoas().GroupBy(i => i.Idade);
+
+foreach (var pessoasAgrupadasIdade in result25)
+{
+    Console.WriteLine();
+    Console.WriteLine("Chave de agrupamento por idade: " + pessoasAgrupadasIdade.Key + " /Total por grupo: " + pessoasAgrupadasIdade.Count());
+
+    foreach(var pessoasGrupo in pessoasAgrupadasIdade) 
+    {
+        Console.WriteLine();
+        Console.WriteLine($"Nome: {pessoasGrupo.Nome}, Idade: {pessoasGrupo.Idade},Sexo: {pessoasGrupo.Sexo}, Curso: {pessoasGrupo.Curso}");
+    }
+}
+
+Console.WriteLine();
+Console.WriteLine("===================Agrupados por curso e ordenado por nome=====================");
+
+var result26 = FontDados.GetPessoas();
+
+var result27 = result26.GroupBy(n => n.Curso)
+    .OrderBy( s => s.Key)
+    .Select(p => new
+    {
+        key = p.Key,
+       Pessoas = p.OrderBy(n => n.Nome)
+    });
+
+foreach (var pessoasAgupadasNome in result27)
+{
+    Console.WriteLine($"{pessoasAgupadasNome.key}  {pessoasAgupadasNome.Pessoas.Count()}");
+
+    foreach (var p in pessoasAgupadasNome.Pessoas)
+    {
+        Console.WriteLine();
+        Console.WriteLine($"Nome: {p.Nome},SX:  {p.Sexo},Idade:  {p.Idade}");
+    }
+}
+
+Console.WriteLine();
+Console.WriteLine("====================Agrupando pessoas por multiplas chaves(KEY)====================");
+
+var result28 = result26.GroupBy(x => new { x.Curso, x.Sexo })
+                       .OrderByDescending(x => x.Key.Curso)
+                       .ThenBy(x => x.Key.Sexo)
+                       .Select(x => new {
+                            Curso = x.Key.Curso,
+                            Sexo = x.Key.Sexo,
+                            Pessoa =  x.OrderBy(x => x.Nome)});
+
+foreach (var grupo in result28)
+{
+    Console.WriteLine($"\n {grupo.Curso} Sexo: {grupo.Sexo} Numero Pessoas:{grupo.Pessoa.Count()}");
+
+    foreach (var g in grupo.Pessoa)
+    {
+        Console.WriteLine($"Pessoa: {g.Nome} Idade: {g.Idade}");
+    }
+}
+
+Console.WriteLine();
+Console.WriteLine("==================Consulta com ToLookup======================");
+
+var result29 = result26.ToLookup(x => x.Curso);
+
+foreach (var grupo in result29)
+{
+    Console.WriteLine($"{grupo.Key} ({grupo.Count()})");
+
+    foreach (var g in grupo)
+    {
+        Console.WriteLine($"Pessoa: {g.Nome}, Idade: {g.Idade} ,Sexo: {g.Sexo}");
+    }
+}
 
 
 Console.ReadKey();

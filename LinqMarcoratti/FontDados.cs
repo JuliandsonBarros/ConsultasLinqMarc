@@ -34,6 +34,23 @@ namespace LinqMarcoratti
             return alunos;
         }
 
+        public static List<Pessoas> GetPessoas()
+        {
+            List<Pessoas> pessoa = new()
+            {
+                new Pessoas {Nome = "Fulano de Tal",Idade = 30,  Nota = 5,Sexo = "M", Curso = "Java, Angular" },
+                new Pessoas {Nome = "Cicrano de Tal",Idade = 20,  Nota = 4, Sexo = "M", Curso = ".NET, React" },
+                new Pessoas {Nome = "Zelia de Tal",Idade = 30,  Nota = 5, Sexo = "F", Curso = "VB net, Botstrap"},
+                new Pessoas {Nome = " De Bruyne de Tal",Idade = 36,  Nota = 2, Sexo = "M", Curso = "JavaScript, Boststrap"},
+                  new Pessoas {Nome = "Crinaldo de Tal",Idade = 20,  Nota = 5,Sexo = "M", Curso = "Java, Angular" },
+                new Pessoas {Nome = "Salah de Tal",Idade = 20,  Nota = 4, Sexo = "M", Curso = ".NET, React" },
+                new Pessoas {Nome = "Joana de Tal",Idade = 20,  Nota = 5, Sexo = "F", Curso = "VB net, Botstrap"},
+                new Pessoas {Nome = "Selma de Tal",Idade = 40,  Nota = 2, Sexo = "F", Curso = "JavaScript, Boststrap"}
+            };
+            return pessoa;   
+        }
+   
+
         public static List<Funcionario> GetFuncionarios()
         {
             List<Funcionario> Funcionarios = new()
